@@ -1,25 +1,25 @@
 <html>
   <script>
     function solution(arr) {
-      let max = Number.MIN_SAFE_INTEGER;
-      let origin;
-      let res;
+      let answer,
+        max = Number.MIN_SAFE_INTEGER;
 
-      for (let i = 0; i < arr.length; i++) {
-        const s = String(arr[i]).split("");
-        let sum = 0;
-        for (let j = 0; j < s.length; j++) {
-          const n = Number(s[j]);
-          sum += n;
+      for (const n of arr) {
+        let sum = 0,
+          tmp = n;
+        while (tmp) {
+          sum += tmp % 10;
+          tmp = Math.floor(tmp / 10);
         }
-        max = Math.max(sum, max);
-        if (sum === max) {
-          origin = arr[i];
-          res = Math.max(origin, arr[i]);
+        if (sum > max) {
+          max = sum;
+          answer = n;
+        } else if (sum === max) {
+          answer = Math.max(answer, n);
         }
       }
 
-      return res;
+      return answer;
     }
 
     console.log(solution([128, 460, 603, 40, 521, 137, 123]));
