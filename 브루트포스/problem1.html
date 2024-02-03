@@ -1,0 +1,27 @@
+<html>
+  <script>
+    function solution(arr) {
+      let max = Number.MIN_SAFE_INTEGER;
+      let origin;
+      let res;
+
+      for (let i = 0; i < arr.length; i++) {
+        const s = String(arr[i]).split("");
+        let sum = 0;
+        for (let j = 0; j < s.length; j++) {
+          const n = Number(s[j]);
+          sum += n;
+        }
+        max = Math.max(sum, max);
+        if (sum === max) {
+          origin = arr[i];
+          res = Math.max(origin, arr[i]);
+        }
+      }
+
+      return res;
+    }
+
+    console.log(solution([128, 460, 603, 40, 521, 137, 123]));
+  </script>
+</html>
