@@ -5,12 +5,10 @@
         max = Number.MIN_SAFE_INTEGER;
 
       for (const n of arr) {
-        let sum = 0,
-          tmp = n;
-        while (tmp) {
-          sum += tmp % 10;
-          tmp = Math.floor(tmp / 10);
-        }
+        let sum = String(n)
+          .split("")
+          .reduce((a, b) => a + Number(b), 0);
+
         if (sum > max) {
           max = sum;
           answer = n;
