@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <script>
+      function solution(arr) {
+        const answer = [];
+
+        for (const n of arr) {
+          const r = Number(String(n).split("").reverse().join(""));
+          const q = Math.floor(r / 2);
+          let isPrime = true;
+
+          for (let i = 2; i <= q; i++) {
+            if (r % i === 0) {
+              isPrime = false;
+              continue;
+            }
+          }
+
+          if (isPrime && r > 1) answer.push(r);
+        }
+
+        return answer;
+      }
+
+      console.log(solution([32, 55, 62, 20, 250, 370, 200, 30, 100]));
+    </script>
+  </body>
+</html>
