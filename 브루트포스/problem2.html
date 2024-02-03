@@ -4,19 +4,22 @@
       function solution(arr) {
         const answer = [];
 
-        for (const n of arr) {
-          const r = Number(String(n).split("").reverse().join(""));
-          const q = Math.floor(r / 2);
-          let isPrime = true;
-
-          for (let i = 2; i <= q; i++) {
-            if (r % i === 0) {
-              isPrime = false;
-              continue;
-            }
+        function isPrime(num) {
+          if (num === 1) return false;
+          for (let i = 2; i <= Math.floor(Math.sqrt(num)); i++) {
+            if (!(num % 2)) return false;
           }
+          return true;
+        }
 
-          if (isPrime && r > 1) answer.push(r);
+        for (let n of arr) {
+          let r = 0;
+          while (n) {
+            let t = n % 10;
+            r = r * 10 + t;
+            n = Math.floor(n / 10);
+          }
+          if (isPrime(r)) answer.push(r);
         }
 
         return answer;
