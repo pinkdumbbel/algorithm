@@ -1,0 +1,50 @@
+<html>
+  <body>
+    <script>
+      function solution(arr, n, m) {
+        let answer = 0;
+
+        for (let i = 0; i < n; i++) {
+          let sum = (cnt = 0);
+          const [iPrice, iSheep] = arr[i];
+          const iTotal = iPrice / 2 + iSheep;
+          sum += iTotal;
+          if (sum <= m) cnt++;
+
+          for (let j = 0; j < n; j++) {
+            if (i === j) continue;
+            const [jPrice, jSheep] = arr[j];
+            const jTotal = jPrice + jSheep;
+            sum += jTotal;
+
+            if (sum > m) break;
+            cnt++;
+
+            for (let k = 0; k < n; k++) {
+              if (j === k) continue;
+              const [kPrice, kSheep] = arr[k];
+              const kTotal = kPrice + kSheep;
+
+              sum += kTotal;
+
+              if (sum > m) break;
+              cnt++;
+            }
+          }
+          answer = Math.max(cnt, answer);
+        }
+
+        return answer;
+      }
+
+      const arr = [
+        [6, 6],
+        [2, 2],
+        [4, 3],
+        [4, 5],
+        [10, 3],
+      ];
+      console.log(solution(arr, 5, 28));
+    </script>
+  </body>
+</html>
