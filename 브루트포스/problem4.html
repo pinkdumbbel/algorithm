@@ -1,37 +1,26 @@
 <html>
   <body>
     <script>
-      function solution(arr, n, m) {
+      function solution(arr, m) {
         let answer = 0;
+        let n = arr.length;
+        arr.sort((a, b) => a[0] + a[1] - (b[0] + b[1]));
 
         for (let i = 0; i < n; i++) {
-          let sum = (cnt = 0);
           const [iPrice, iSheep] = arr[i];
           const iTotal = iPrice / 2 + iSheep;
-          sum += iTotal;
-          if (sum <= m) cnt++;
+          let money = m - iTotal;
+          let cnt = 1;
 
           for (let j = 0; j < n; j++) {
-            if (i === j) continue;
-            const [jPrice, jSheep] = arr[j];
-            const jTotal = jPrice + jSheep;
-            sum += jTotal;
-
-            if (sum > m) break;
-            cnt++;
-
-            for (let k = 0; k < n; k++) {
-              if (j === k) continue;
-              const [kPrice, kSheep] = arr[k];
-              const kTotal = kPrice + kSheep;
-
-              sum += kTotal;
-
-              if (sum > m) break;
+            if (i !== j && arr[j][0] + arr[j][1] > money) break;
+            if (i !== j && arr[j][0] + arr[j][1] <= money) {
+              const [jPrice, jSheep] = arr[j];
+              money -= jPrice + jSheep;
               cnt++;
             }
           }
-          answer = Math.max(cnt, answer);
+          answer = Math.max(answer, cnt);
         }
 
         return answer;
@@ -44,7 +33,8 @@
         [4, 5],
         [10, 3],
       ];
-      console.log(solution(arr, 5, 28));
+
+      console.log(solution(arr, 28));
     </script>
   </body>
 </html>
