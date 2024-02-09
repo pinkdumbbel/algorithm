@@ -6,15 +6,15 @@
 
         for (let i = 1; i <= n; i++) {
           for (let j = 1; j <= n; j++) {
-            let pi = 0;
-            let pj = 0;
             let cnt = 0;
-            if (i === j) continue;
 
             for (let k = 0; k < arr.length; k++) {
-              pi = arr[k].indexOf(i);
-              pj = arr[k].indexOf(j);
-
+              let pi = 0;
+              let pj = 0;
+              for (let s = 0; s < arr[k].length; s++) {
+                if (arr[k][s] === i) pi = s;
+                if (arr[k][s] === j) pj = s;
+              }
               if (pi < pj) cnt++;
             }
 
