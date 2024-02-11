@@ -3,22 +3,18 @@
     <script>
       function solution(arr, k) {
         let answer = 0;
-        const tmp = [];
-        const sArr = [...new Set(arr.sort((a, b) => b - a))];
+        const n = arr.length;
+        const tmp = new Set();
 
-        for (let i = 0; i < sArr.length; i++) {
-          for (let j = i + 1; j < sArr.length; j++) {
-            if (!sArr[j]) break;
-            let sum = 0;
-            sum += sArr[i] + sArr[j];
-            for (let s = j + 1; s < sArr.length; s++) {
-              if (!sArr[s]) break;
-              tmp.push(sum + sArr[s]);
-
-              if (tmp.length === k) return tmp.pop();
+        for (let i = 0; i < n; i++) {
+          for (let j = i + 1; j < n; j++) {
+            for (let k = j + 1; k < n; k++) {
+              tmp.add(arr[i] + arr[j] + arr[k]);
             }
           }
         }
+
+        answer = Array.from(tmp).sort((a, b) => b - a)[k - 1];
 
         return answer;
       }
