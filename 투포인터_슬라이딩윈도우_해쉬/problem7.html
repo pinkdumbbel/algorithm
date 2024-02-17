@@ -1,0 +1,38 @@
+<html>
+  <body>
+    <script>
+      function solution(arr1, arr2) {
+        let answer = "YES";
+        const map1 = new Map();
+        const map2 = new Map();
+
+        for (const s of arr1) {
+          if (map1.has(s)) {
+            map1.set(s, map1.get(s) + 1);
+          } else {
+            map1.set(s, 1);
+          }
+        }
+
+        for (const s of arr2) {
+          if (map2.has(s)) {
+            map2.set(s, map2.get(s) + 1);
+          } else {
+            map2.set(s, 1);
+          }
+        }
+
+        for (const [key, val] of map1) {
+          if (!map2.has(key) || map2.get(key) !== val) return "NO";
+        }
+
+        return answer;
+      }
+
+      const arr1 = "abaCC".split("");
+      const arr2 = "Caaab".split("");
+
+      console.log(solution(arr1, arr2));
+    </script>
+  </body>
+</html>
