@@ -1,0 +1,20 @@
+<html>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer = "";
+        const hash = {};
+
+        for (let i = 0; i < arr.length; i++) {
+          hash[arr[i]] = hash[arr[i]] ? ++hash[arr[i]] : 1;
+        }
+
+        return Object.keys(hash).find(
+          (k) => hash[k] === Math.max(...Object.values(hash))
+        );
+      }
+      const arr = "BACBACCACCBDEDE".split("");
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
