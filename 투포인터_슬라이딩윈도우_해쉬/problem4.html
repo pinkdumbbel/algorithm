@@ -3,35 +3,17 @@
     <script>
       function solution(arr, m) {
         let answer = 0,
-          rt = 0,
-          lt = 1,
+          lt = 0,
           sum = 0;
         const n = arr.length;
 
-        while (rt < n) {
-          sum += arr[rt++];
-
-          if (sum <= m) {
-            answer++;
-          } else {
-            sum = 0;
-            while (lt <= rt) {
-              sum += arr[lt];
-              if (sum <= m) {
-                lt++;
-                answer++;
-              } else {
-                lt--;
-                sum = 0;
-              }
-
-              if (lt > rt) {
-                sum = 0;
-              }
-            }
+        for (let rt = 0; rt < n; rt++) {
+          sum += arr[rt];
+          while (sum > m) {
+            sum -= arr[lt++];
           }
+          answer += rt - lt + 1;
         }
-
         return answer;
       }
 
