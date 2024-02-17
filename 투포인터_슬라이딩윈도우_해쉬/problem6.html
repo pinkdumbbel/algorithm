@@ -3,15 +3,25 @@
     <script>
       function solution(arr) {
         let answer = "";
-        const hash = {};
+        const map = new Map();
 
-        for (let i = 0; i < arr.length; i++) {
-          hash[arr[i]] = hash[arr[i]] ? ++hash[arr[i]] : 1;
+        for (let s of arr) {
+          if (map.has(s)) {
+            map.set(s, map.get(s) + 1);
+          } else {
+            map.set(s, 1);
+          }
         }
 
-        return Object.keys(hash).find(
-          (k) => hash[k] === Math.max(...Object.values(hash))
-        );
+        let max = Number.MIN_SAFE_INTEGER;
+        for (const [key, val] of map) {
+          if (val > max) {
+            max = val;
+            answer = key;
+          }
+        }
+
+        return answer;
       }
       const arr = "BACBACCACCBDEDE".split("");
       console.log(solution(arr));
