@@ -1,0 +1,42 @@
+<html>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = 0;
+        const stack = [];
+        const operators = ["+", "-", "*", "/"];
+
+        for (const x of s) {
+          if (operators.includes(x)) {
+            const n1 = Number(stack.pop());
+            const n2 = Number(stack.pop());
+
+            switch (x) {
+              case "+":
+                answer = n2 + n1;
+                break;
+              case "-":
+                answer = n2 - n1;
+                break;
+              case "*":
+                answer = n2 * n1;
+                break;
+              case "/":
+                answer = n2 / n1;
+                break;
+              default:
+                break;
+            }
+            stack.push(answer);
+          } else {
+            stack.push(x);
+          }
+        }
+
+        return answer;
+      }
+
+      console.log(solution("352+*9-"));
+    </script>
+  </body>
+</html>
