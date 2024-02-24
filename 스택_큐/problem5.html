@@ -5,12 +5,13 @@
         let answer = 0;
         const stack = [];
 
-        for (const x of s) {
-          if (x === ")") {
+        for (let i = 0; i < s.length; i++) {
+          if (s[i] === ")") {
             stack.pop();
-            answer += stack.length;
+            if (s[i - 1] === "(") answer += stack.length;
+            else answer++;
           } else {
-            stack.push(x);
+            stack.push(s[i]);
           }
         }
 
