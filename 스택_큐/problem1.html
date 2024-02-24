@@ -1,0 +1,17 @@
+<html>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = "YES";
+        const arr = [];
+
+        for (let x of s) {
+          x === "(" ? arr.push(x) : arr.pop();
+        }
+
+        return arr.length > 0 ? "NO" : "YES";
+      }
+      console.log(solution("(()(()))(()"));
+    </script>
+  </body>
+</html>
