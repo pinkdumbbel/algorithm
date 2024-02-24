@@ -3,13 +3,17 @@
     <script>
       function solution(s) {
         let answer = "YES";
-        const arr = [];
+        const stack = [];
 
         for (let x of s) {
-          x === "(" ? arr.push(x) : arr.pop();
+          if (x === "(") stack.push(x);
+          else {
+            if (!stack.length) return "NO";
+            stack.pop();
+          }
         }
 
-        return arr.length > 0 ? "NO" : "YES";
+        return stack.length > 0 ? "NO" : "YES";
       }
       console.log(solution("(()(()))(()"));
     </script>
