@@ -1,17 +1,20 @@
 <html>
   <body>
     <script>
-      function solution(a, b) {
-        const arr = [];
-        for (let s of b) {
-          if (a.includes(s)) {
-            arr.push(s);
+      function solution(need, plan) {
+        let answer = "YES";
+        const queue = [...need];
+
+        for (let s of plan) {
+          if (queue.includes(s)) {
+            if (s !== queue.shift()) return "NO";
           }
         }
-        return arr.join("") === a.join("") ? "YES" : "NO";
+        if (queue.length > 0) return "NO";
+        return answer;
       }
 
-      console.log(solution([..."CBA"], [..."CBDAGE"]));
+      console.log(solution("CBA", "CBDAGE"));
     </script>
   </body>
 </html>
