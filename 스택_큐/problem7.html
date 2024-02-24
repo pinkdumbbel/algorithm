@@ -1,0 +1,17 @@
+<html>
+  <body>
+    <script>
+      function solution(a, b) {
+        const arr = [];
+        for (let s of b) {
+          if (a.includes(s)) {
+            arr.push(s);
+          }
+        }
+        return arr.join("") === a.join("") ? "YES" : "NO";
+      }
+
+      console.log(solution([..."CBA"], [..."CBDAGE"]));
+    </script>
+  </body>
+</html>
