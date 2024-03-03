@@ -1,0 +1,22 @@
+<html>
+  <body>
+    <script>
+      function solution(arr, n) {
+        arr.sort((a, b) => a - b);
+        let low = 0;
+        let high = arr.length - 1;
+
+        while (low <= high) {
+          const mid = parseInt((low + high) / 2);
+
+          if (arr[mid] === n) return mid + 1;
+          else if (n < arr[mid]) high = mid - 1;
+          else if (n > arr[mid]) low = mid + 1;
+        }
+      }
+
+      const arr = [23, 87, 65, 12, 57, 32, 99, 81];
+      console.log(solution(arr, 32));
+    </script>
+  </body>
+</html>
