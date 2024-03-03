@@ -2,14 +2,22 @@
   <body>
     <script>
       function solution(arr) {
-        let answer = 1;
-        arr.sort((a, b) => {
-          if (a[1] === b[1]) return a[0] - b[0];
-          return a[1] - b[1];
+        let answer = 0;
+        const tLine = [];
+        for (let x of arr) {
+          tLine.push([x[0], "s"]);
+          tLine.push([x[1], "e"]);
+        }
+        tLine.sort((a, b) => {
+          if (a[0] === b[0]) return a[1].charCodeAt() - b[1].charCodeAt();
+          return a[0] - b[0];
         });
 
-        let et = arr[0][1];
-        for (let i = 1; i < arr.length; i++) if (et > arr[i][0]) answer++;
+        let cnt = 0;
+        for (let x of tLine) {
+          x[1] === "s" ? cnt++ : cnt--;
+          answer = Math.max(answer, cnt);
+        }
 
         return answer;
       }
