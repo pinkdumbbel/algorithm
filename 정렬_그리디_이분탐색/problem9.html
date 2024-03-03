@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer = 1;
+        arr.sort((a, b) => {
+          if (a[1] === b[1]) return a[0] - b[0];
+          return a[1] - b[1];
+        });
+
+        let et = arr[0][1];
+        for (let i = 1; i < arr.length; i++) if (et > arr[i][0]) answer++;
+
+        return answer;
+      }
+
+      const arr = [
+        [14, 18],
+        [12, 15],
+        [15, 20],
+        [20, 30],
+        [5, 14],
+      ];
+
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
