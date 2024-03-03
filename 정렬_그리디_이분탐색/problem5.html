@@ -4,18 +4,22 @@
       function solution(n, arr) {
         const answer = Array.from({ length: n }, () => 0);
 
-        for (let i = 0; i < arr.length; i++) {
-          let idx;
-          if ((idx = answer.indexOf(arr[i])) > -1) {
-            while (idx > 0) {
-              [answer[idx - 1], answer[idx]] = [answer[idx], answer[idx - 1]];
-              idx--;
+        arr.forEach((x) => {
+          let pos = -1;
+
+          for (let i = 0; i < n; i++) if (answer[i] === x) pos = i;
+
+          if (pos === -1) {
+            for (let i = n - 1; i >= 1; i--) {
+              answer[i] = answer[i - 1];
             }
           } else {
-            answer.unshift(arr[i]);
-            answer.pop();
+            for (let i = pos; i >= 1; i--) {
+              answer[i] = answer[i - 1];
+            }
           }
-        }
+          answer[0] = x;
+        });
 
         return answer;
       }
