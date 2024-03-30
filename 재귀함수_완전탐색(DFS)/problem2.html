@@ -1,0 +1,25 @@
+<html>
+  <body>
+    <script>
+      function solution(n) {
+        let binary = "";
+        function DFS(L) {
+          if (L === 0) return;
+          else {
+            const q = Math.floor(L / 2);
+            const r = L % 2;
+
+            DFS(q);
+            binary += r;
+          }
+        }
+
+        DFS(n);
+
+        return binary;
+      }
+
+      console.log(solution(11));
+    </script>
+  </body>
+</html>
