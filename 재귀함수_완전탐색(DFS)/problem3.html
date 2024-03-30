@@ -1,0 +1,30 @@
+<html>
+  <body>
+    <script>
+      function solution(v) {
+        const pre = [];
+        const ino = [];
+        const pos = [];
+
+        function DFS(v) {
+          if (v > 7) return;
+          else {
+            pre.push(v);
+            DFS(v * 2);
+            ino.push(v);
+            DFS(v * 2 + 1);
+            pos.push(v);
+          }
+        }
+
+        DFS(v);
+
+        console.log(pre);
+        console.log(ino);
+        console.log(pos);
+      }
+
+      console.log(solution(1));
+    </script>
+  </body>
+</html>
