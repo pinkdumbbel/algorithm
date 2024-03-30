@@ -3,16 +3,14 @@
     <script>
       function solution(n) {
         function dfs(l) {
-          if (l === n) {
+          if (l === 0) return;
+          else {
+            dfs(l - 1);
             console.log(l);
-            return l;
-          } else {
-            console.log(l);
-            dfs(l + 1);
           }
         }
 
-        dfs(1);
+        dfs(n);
       }
 
       console.log(solution(3));
