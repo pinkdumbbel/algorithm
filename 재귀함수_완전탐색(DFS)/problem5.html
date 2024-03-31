@@ -4,30 +4,19 @@
       function solution(arr) {
         let answer = "NO";
         const n = arr.length;
-        const chk = Array.from({ length: n - 1 }, () => false);
-        const sums = [];
+        const total = arr.reduce((a, b) => a + b, 0);
 
-        function DFS(L) {
+        function DFS(L, sum) {
+          if (answer === "YES") return;
           if (L === n) {
-            const sum = chk.reduce((a, b, i) => {
-              if (b) a += arr[i];
-              return a;
-            }, 0);
-
-            if (sums.includes(sum)) {
-              answer = "YES";
-            } else {
-              sums.push(sum);
-            }
+            if (total - sum === sum) answer = "YES";
           } else {
-            chk[L] = true;
-            DFS(L + 1);
-            chk[L] = false;
-            DFS(L + 1);
+            DFS(L + 1, arr[L] + sum);
+            DFS(L + 1, sum);
           }
         }
 
-        DFS(0);
+        DFS(0, 0);
 
         return answer;
       }
