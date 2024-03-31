@@ -7,10 +7,9 @@
         const tmp = [];
 
         function DFS(L, sum) {
+          if (sum > c) return;
           if (L === n) {
-            if (sum <= c) {
-              answer = Math.max(answer, sum);
-            }
+            answer = Math.max(answer, sum);
           } else {
             DFS(L + 1, sum + arr[L]);
             DFS(L + 1, sum);
