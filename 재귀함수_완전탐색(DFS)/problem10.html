@@ -1,0 +1,29 @@
+<html>
+  <body>
+    <script>
+      function solution(arr, m) {
+        const answer = [];
+        const tmp = Array.from({ length: m }, () => 0);
+
+        function DFS(L) {
+          if (L === m) {
+            answer.push(tmp.slice());
+          } else {
+            for (const x of arr) {
+              if (tmp[L - 1] === x) continue;
+              tmp[L] = x;
+              DFS(L + 1);
+            }
+          }
+        }
+
+        DFS(0);
+
+        return answer;
+      }
+
+      const arr = [3, 6, 9];
+      console.log(solution(arr, 2));
+    </script>
+  </body>
+</html>
