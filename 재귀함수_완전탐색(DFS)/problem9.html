@@ -1,0 +1,26 @@
+<html>
+  <body>
+    <script>
+      function solution(coins, m) {
+        let answer = Number.MAX_SAFE_INTEGER;
+
+        function DFS(c, s) {
+          if (s >= m) {
+            answer = Math.min(answer, c);
+          } else {
+            for (const x of coins) {
+              DFS(c + 1, s + x);
+            }
+          }
+        }
+
+        DFS(0, 0);
+
+        return answer;
+      }
+
+      const arr = [1, 2, 5];
+      console.log(solution(arr, 15));
+    </script>
+  </body>
+</html>
