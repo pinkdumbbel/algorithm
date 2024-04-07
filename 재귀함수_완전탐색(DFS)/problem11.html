@@ -2,17 +2,14 @@
   <body>
     <script>
       function solution(n) {
-        let answer = 1;
+        let answer;
 
-        function DFS(L) {
-          if (L === n + 1) return;
-          else {
-            answer *= L;
-            DFS(L + 1);
-          }
+        function DFS(n) {
+          if (n === 1) return 1;
+          else return n * DFS(n - 1);
         }
 
-        DFS(1);
+        answer = DFS(n);
 
         return answer;
       }
