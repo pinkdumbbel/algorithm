@@ -4,12 +4,14 @@
       function solution(coins, m) {
         let answer = Number.MAX_SAFE_INTEGER;
 
-        function DFS(c, s) {
-          if (s >= m) {
-            answer = Math.min(answer, c);
+        function DFS(L, sum) {
+          if (sum > m) return;
+          if (L >= answer) return;
+          if (sum === m) {
+            answer = Math.min(answer, L);
           } else {
             for (const x of coins) {
-              DFS(c + 1, s + x);
+              DFS(L + 1, sum + x);
             }
           }
         }
