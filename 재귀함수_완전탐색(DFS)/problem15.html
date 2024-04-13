@@ -1,0 +1,27 @@
+<html>
+  <body>
+    <script>
+      function solution(arr, k, m) {
+        let answer = 0;
+        const n = arr.length;
+
+        function DFS(L, s, sum) {
+          if (L === k && sum % m === 0) {
+            answer++;
+          } else {
+            for (let i = s; i <= n; i++) {
+              DFS(L + 1, i + 1, sum + arr[i - 1]);
+            }
+          }
+        }
+
+        DFS(0, 1, 0);
+
+        return answer;
+      }
+
+      const arr = [2, 4, 5, 8, 12];
+      console.log(solution(arr, 3, 6));
+    </script>
+  </body>
+</html>
