@@ -5,8 +5,6 @@ function solution(ingredient) {
     
     const stack = [];
     
-    let lt = 0;
-    
     for(let i = 0; i < ingredient.length; i++) {
         stack.push(ingredient[i]);
         
