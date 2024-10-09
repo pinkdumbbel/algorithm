@@ -1,38 +1,18 @@
 function solution(id_list, report, k) {
-    var answer = [];
-    const resultHash = {};   
-    const reportHash = {};
-    const reporteeHash = {};
+    const reports = [...new Set(report)].map((r) => r.split(' '));
     
-    id_list.forEach((id) => {
-        reporteeHash[id] = 0;
-        resultHash[id] = 0;
+    const cntMap = new Map();
+    const reportMap = new Map();
+    
+    reports.forEach(([reporter, reportee]) => {
+        cntMap.set(reportee, (cntMap.get(reportee)??0)+1)
+    });
+        
+    reports.forEach(([reporter, reportee]) => {
+        const cnt = cntMap.get(reportee);
+        if(cnt < k) return;    
+        reportMap.set(reporter, (reportMap.get(reporter)??0)+1)
     });
     
-    report.forEach((r) => {
-        const [a,b] = r.split(' ');
-        
-        if(reportHash[a]?.[b]) return;
-        
-        reportHash[a] = {
-             ...reportHash[a],
-             [b]: true
-        }
-        
-        if(reporteeHash[b] === k) return;
-        
-        reporteeHash[b] += 1; 
-    });
-    
-    Object.entries(reporteeHash).forEach(([reportee, cnt]) => {
-        if(cnt !== k) return;
-        
-        Object.entries(reportHash).forEach(([reporter, reportee2]) => {
-            if(Object.keys(reportee2).includes(reportee)) {
-                resultHash[reporter] += 1
-            }
-        });
-    });
-    
-    return id_list.map((id) => resultHash[id]);
+    return id_list.map((id) => reportMap.get(id) ?? 0);
 }
