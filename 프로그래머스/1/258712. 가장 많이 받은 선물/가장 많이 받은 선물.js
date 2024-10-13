@@ -15,7 +15,7 @@ function solution(friends, gifts) {
 
     gifts.forEach((gift) => {
         const [giver, taker] = gift.split(' ');
-        give[giver][taker] = (give[giver][taker]??0)+1;
+        give[giver][taker] += 1;
         score[giver] += 1;
         score[taker] -= 1;
     });
@@ -24,7 +24,7 @@ function solution(friends, gifts) {
        let cnt = 0;
         
        for(const [taker, takeCnt] of Object.entries(give[giver])){
-           const giveCnt = (give[taker][giver]??0);
+           const giveCnt = give[taker][giver]
            const diff = takeCnt - giveCnt;
            
            if(diff === 0) {               
