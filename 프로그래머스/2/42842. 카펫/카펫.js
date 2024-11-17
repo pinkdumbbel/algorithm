@@ -1,15 +1,13 @@
 function solution(brown, yellow) {
-    const brownMax = (brown-2)/2;
-    let row = 1;
+    const total = brown + yellow;
     
-    for(let i = brownMax; i >= 0; i--) {
-        const yellowCnt = (i-2)*row;
-        row++;
+    for (let height = 3; height <= Math.sqrt(total); height++) {
+        if (total % height !== 0) continue;
         
-        if(yellowCnt === yellow) {
-            return [i, row+1]
+        const width = total / height;
+        if ((width - 2) * (height - 2) === yellow) {
+            return [width, height];
         }
-    };
-    
+    }
     return [];
 }
