@@ -1,4 +1,4 @@
-//left i = left; i <= right; i++; 순회
+//left i = left+1; i <= right+1; i++; 순회
 //i를 n으로 나눈 나머지가 몫+1보다 크면 나머지 push 아니면 몫+1 push
 //몫과 나머지가 0이면 1을 push;
 //나머지가 0 이면 n을 push
