@@ -1,34 +1,36 @@
-//캐시 크기에 따른 실행시간 측정
-
-/*
-- hash로 풀자(map을 사용하는게 편할듯)
-- cities를 순회 하면서 map에 저장한다.
-- map에 이미 데이터가 있으면 answer를 1 증가시키고 아니면 5를 증가시킨다.
-- map의 사이즈가 cacheSize보다 크면 value가 false인 것 중 가장 첫번째 키를 delete한다.
-*/
 function solution(cacheSize, cities) {
-    var answer = 0;
-    const map = new Map();
-    const caches = [];
+    // 캐시 크기가 0인 경우 특별 처리
+    if (cacheSize === 0) {
+        return cities.length * 5;
+    }
     
-    cities.forEach((city) => {
-        const c = city.toLowerCase();
-        const idx = caches.indexOf(c);
-        
-        if(idx >= 0) {
-            answer+=1;
-            caches.splice(idx,1);
-        } else {
-            answer+=5;
-        };
-        
-        caches.unshift(c);
-        
-        if(caches.length > cacheSize) {
-            caches.pop();
-        };
-    });
+    // 대소문자 구분 없는 캐시 구현
+    const cache = new Map();
+    let totalTime = 0;
     
-    return answer;
+    for (const city of cities) {
+        const cityLower = city.toLowerCase();
+        
+        // 캐시에 도시가 있는 경우 (캐시 히트)
+        if (cache.has(cityLower)) {
+            // 해당 도시를 가장 최근에 사용된 항목으로 갱신
+            cache.delete(cityLower);
+            cache.set(cityLower, true);
+            totalTime += 1;
+        } 
+        // 캐시에 도시가 없는 경우 (캐시 미스)
+        else {
+            // 캐시가 꽉 찬 경우 가장 오래된 항목 제거
+            if (cache.size >= cacheSize) {
+                const oldestKey = cache.keys().next().value;
+                cache.delete(oldestKey);
+            }
+            
+            // 새로운 도시 추가
+            cache.set(cityLower, true);
+            totalTime += 5;
+        }
+    }
+    
+    return totalTime;
 }
-
