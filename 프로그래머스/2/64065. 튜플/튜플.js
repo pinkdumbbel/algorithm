@@ -1,8 +1,8 @@
 function solution(s) {
     return s
-            .slice(1,-1)
+            .slice(2,-2)
             .split('},{')
-            .map((s) => s.replace(/[{}]/g, '').split(',').map(Number))
+            .map((s) => s.split(',').map(Number))
             .sort((a,b) => a.length - b.length)
             .reduce((a,b) => [...a, ...b.filter((el) => !a.includes(el))], []);
 }
