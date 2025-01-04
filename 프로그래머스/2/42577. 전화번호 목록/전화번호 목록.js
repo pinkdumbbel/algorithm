@@ -1,19 +1,7 @@
-function solution(phone_book) {
-    const hashMap = new Map();
+function solution(phoneBook) {
+    return !phoneBook.sort().some((t,i)=> {
+        if(i === phoneBook.length -1) return false;
 
-    for (let phone of phone_book) {
-        hashMap.set(phone, true);
-    }
-    
-    for (let phone of phone_book) {
-        for (let i = 1; i < phone.length; i++) {
-            const prefix = phone.slice(0, i);
-            
-            if (hashMap.has(prefix) && prefix !== phone) {
-                return false;
-            }
-        }
-    }
-    
-    return true;
+        return phoneBook[i+1].startsWith(phoneBook[i]);        
+    })
 }
