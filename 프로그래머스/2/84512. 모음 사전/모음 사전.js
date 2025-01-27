@@ -3,11 +3,17 @@ function solution(word) {
     const words = ['A', 'E', 'I', 'O', 'U']; 
     const n = words.length;
     const arr = [];
+    let flag = false;
     
     function dfs(s = '') {
-        if(s.length > n) return;
+        if(flag || s.length > n) return;
         
-        if(s) arr.push(s);
+        if(s === word) {
+            flag = true;
+            return;
+        }
+        
+        answer++;
         
         for(const w of words) {
             dfs(s + w);
@@ -16,5 +22,5 @@ function solution(word) {
     
     dfs();
     
-    return arr.indexOf(word) + 1;
+    return answer;
 };
