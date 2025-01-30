@@ -1,10 +1,10 @@
 # [level 2] 뒤에 있는 큰 수 찾기 - 154539 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/154539) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/154539?language=javascript) 
 
 ### 성능 요약
 
-메모리: 160 MB, 시간: 46.92 ms
+메모리: 160 MB, 시간: 46.63 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 01월 28일 20:41:53
+2025년 01월 30일 13:30:03
 
 ### 문제 설명
 
