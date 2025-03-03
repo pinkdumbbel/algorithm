@@ -1,7 +1,7 @@
 function solution(m, n, board) {
     let answer = 0;
     board = board.map((s) => s.split(''));
-
+    
     while(true) {
         const toRemoved = new Set();
         
@@ -30,15 +30,19 @@ function solution(m, n, board) {
             board[i][j] = null;
         });
         
-        for (let j = 0; j < n; j++) {
-            let index = m - 1;
-            for (let i = m - 1; i >= 0; i--) {
-                if (board[i][j]) {
-                    board[index][j] = board[i][j];
-                    if (index !== i) board[i][j] = null;
-                    index--;
-                }
-            }
+        for(let i = m-1; i >=0; i--) {
+            if(board[i].every((v) => v)) continue;
+            
+            for(let j = 0; j < n; j++) {
+                for(let k = i-1; k >= 0; k--) {
+                    if(board[i][j]) break;
+                    
+                    if(board[k][j]) {
+                        board[i][j] = board[k][j];
+                        board[k][j] = null;
+                    };
+                };
+            };
         }
     };
     
