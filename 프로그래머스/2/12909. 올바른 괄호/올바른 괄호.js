@@ -1,14 +1,13 @@
 function solution(s){
     const stack = [];
     
-    for(const x of s) {
-        
-        if(x === ')') {
-            stack.length ? stack.pop() : stack.push(x)
-        } else{
-            stack.push(x);
-        }
-    };
+    s.split('').forEach((el) => {
+        if(stack.length && el === ')') {
+            stack.pop();
+        } else {
+            stack.push(el);
+        }    
+    });
     
-    return stack.length === 0;
+    return stack.length ? false : true;
 }
