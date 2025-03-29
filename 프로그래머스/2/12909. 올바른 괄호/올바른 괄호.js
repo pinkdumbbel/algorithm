@@ -9,5 +9,5 @@ function solution(s){
         }    
     });
     
-    return stack.length ? false : true;
+    return !stack.length;
 }
