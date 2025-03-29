@@ -1,13 +1,15 @@
 function solution(s) {
     let cnt = 0;
-    let sum = 0;
+    let removed = 0;
     
-    while(s.length > 1) {        
-        const len = (s.match(/0/g) || []).length;
-        s = s.replace(/0/g,'').length.toString(2);
-        sum += len;
+    while(s !== '1') {
+        const len = s.toString(2).replace(/0/g,'').length;
+        const zeros = s.length - len;
+        s = len.toString(2);
+        
         cnt++;
+        removed += zeros;
     };
     
-    return [cnt, sum]
+    return [cnt, removed];
 }
