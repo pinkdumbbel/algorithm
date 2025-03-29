@@ -1,3 +1,8 @@
 function solution(s) {
-    return `${Math.min(...s.split(' ').map(Number))} ${Math.max(...s.split(' ').map(Number))}`
+    return s
+            .split(' ')
+            .map(Number)
+            .sort((a,b) => a-b)
+            .filter((_, i, arr) => !i || i === arr.length-1)
+            .join(' ');
 }
