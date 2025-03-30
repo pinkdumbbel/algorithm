@@ -1,9 +1,17 @@
 function solution(n) {
-    const tmp = n.toString(2);
+    var answer = 0;
+    const tmp = n;
+    
     while(true) {
-      n += 1;
-      const bin = n.toString(2);
-        
-      if(tmp.match(/1/g).length === bin.match(/1/g).length) return n;
+        n++;
+        if(n.toString(2).replace(/0/g,'').length === tmp.toString(2).replace(/0/g,'').length) {
+            return n;
+        };
     };
+    
+    return answer;
 }
+
+/*
+
+*/
