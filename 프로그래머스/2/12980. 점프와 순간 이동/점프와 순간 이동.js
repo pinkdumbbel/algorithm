@@ -1,14 +1,22 @@
-function solution(n) {
-    let answer = 1;    
-
-    while(n !== 1) {
-        let tmp = n;
-        n = parseInt(tmp/2);
+function solution(n){
+    let answer = 0;
+    
+    while(n>0) {
+        if(n%2) answer++;
         
-        if(tmp%2 === 1) answer++;
+        n = parseInt(n/2);
     };
     
     return answer;
 }
 
+/*
+n === 7;
+점1 -> 1;
+순2 -> 2;
+점1 -> 3;
+순2 -> 6;
+점1 -> 7;
 
+
+*/
