@@ -1,19 +1,13 @@
-function solution(people, limit) {    
-    people.sort((a,b) => a-b);
-    
-    let answer = people.length;
-    
-    let lt = 0;
+function solution(people, limit) {
+    let answer = 0;
     let rt = people.length-1;
+    people.sort((a,b) => b-a);
     
-    while(lt < rt){
-        if(people[lt] + people[rt] <= limit) {
-            answer--;
-            lt++;
+    for(let lt = 0; lt <= rt; lt++) {
+        if(people[lt]+people[rt] <= limit) {
             rt--;
-        } else {
-            rt--;
-        }
+        };       
+        answer++;
     };
     
     return answer;
