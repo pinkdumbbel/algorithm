@@ -1,29 +1,22 @@
 function solution(n, words) {
-    let answer = [0,0];
-    const hash = {};
+    const answer = [0,0];
+    const map = new Map();
     
-    words.forEach((word) => {
-        hash[word] = false;
-    });
-    
-    hash[words[0]] = true;
-    
-    const getFail = (index) => [(index%n)+1, parseInt(index/n)+1];
+    map.set(words[0], true);
     
     for(let i = 1; i < words.length; i++) {
-        const cur = words[i];
-        const prev = words[i-1];
+        const current = words[i];
+        const prev = words[i-1]
         
-        if(hash[cur]) {
-            return getFail(i)
+        if(map.get(current) || current[0] !== prev[prev.length-1]) {
+            const loser = !((i+1)%n) ? n : (i+1)%n;
+            answer[0] = loser;
+            answer[1] = Math.ceil((i+1)/n)
+            return answer;
         }
         
-        if(prev[prev.length-1] !== cur[0]) {
-            return getFail(i)
-        };
-        
-        hash[cur] = true;
-    };
+        map.set(current, true);
+    }
     
     return answer;
 }
