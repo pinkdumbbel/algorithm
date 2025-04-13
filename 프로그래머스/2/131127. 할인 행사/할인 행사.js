@@ -1,24 +1,26 @@
 function solution(want, number, discount) {
     let answer = 0;
-    let p = 0;
-    const max = 10;
+    const len = discount.length;
     
-    const hash = {};
-    
-    want.forEach((w, i) => {
-        hash[w] = number[i];           
-    });
-    
-    while(p <= discount.length-max) {
-        const copied = {...hash};
-        for(let i = p; i < max+p; i++) {
-            const item = discount[i];
-            if(copied[item] > 0) copied[item] = copied[item]-1;
+    for(let i = 0; i <= len-10; i++) {        
+        const arr = discount.slice(i, i+10);
+        const map = new Map();
+        
+        want.forEach((el,i) => {
+            map.set(el, number[i]);
+        });
+        
+        for(let j = 0; j < arr.length; j++) {
+            const item = arr[j];
+            
+            if(map.has(item)) {
+                map.set(item, map.get(item)-1);
+                if(map.get(item) === 0) map.delete(item) 
+            };
         }
         
-        if(want.every(w => copied[w] === 0)) answer++;
-        p++;
-    };
+        if(!map.size) answer++;
+    }
     
     return answer;
 }
