@@ -1,7 +1,5 @@
-function solution(phoneBook) {
-    return !phoneBook.sort().some((t,i)=> {
-        if(i === phoneBook.length -1) return false;
-
-        return phoneBook[i+1].startsWith(phoneBook[i]);        
-    })
+function solution(phone_book) {
+    
+    return !phone_book.sort()
+                      .some((s, i) => i ? s.startsWith(phone_book[i-1]) : false);
 }
