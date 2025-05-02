@@ -1,25 +1,47 @@
 function solution(word) {
-    var answer = 0;
-    const words = ['A', 'E', 'I', 'O', 'U']; 
-    const n = words.length;
+    let answer = 0;
+    const arr = ['A', 'E', 'I', 'O', 'U'];
+    const n = arr.length;
     let flag = false;
     
-    function dfs(s = '') {
-        if(flag || s.length > n) return;
+    const recur = (str = '') => {
+        if(flag) return;
         
-        if(s === word) {
-            flag = true;
-            return;
-        }
+        if(str.length > n) return;
+        if(str === word) flag = true;
         
-        answer++;
+        if(!flag) answer++;
         
-        for(const w of words) {
-            dfs(s + w);
-        }
+        for(const w of arr) {
+            recur(str+w);
+        };
     };
     
-    dfs();
+    recur();
     
     return answer;
-};
+}
+
+/*
+A
+AA
+AAA
+AAAA
+AAAAA
+
+AAAAE
+AAAAI
+AAAAO
+AAAAU
+
+AAAE
+AAAI
+AAAO
+AAAU
+
+AAE
+AAI
+AAO
+AAU
+...
+*/
