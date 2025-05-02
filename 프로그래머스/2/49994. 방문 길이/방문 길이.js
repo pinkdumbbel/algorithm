@@ -1,27 +1,29 @@
 function solution(dirs) {
-    let current = [0,0];
-    const dir = {
-        U: [0,1],
-        D: [0,-1],
-        R: [1,0],
-        L: [-1,0]
-    };
     const set = new Set();
+    const direction = {
+        U: [1, 0],
+        D: [-1, 0],
+        R: [0, 1],
+        L: [0, -1]
+    }
     
-    for(const d of dirs) {
-        const [x,y] = dir[d];
-        const [cx, cy] = current;
-        const [mx ,my] = [cx+x, cy+y];
-        
-        if(Math.abs(mx) > 5 || Math.abs(my) > 5) continue;
-        
-        set.add(`${cx}${cy}${mx}${my}`);
-        set.add(`${mx}${my}${cx}${cy}`);
-
-        
-        current = [mx, my];
-    };
+    const current = [0,0];
     
-    return set.size/2;
+    dirs.split('').forEach((d) => {
+        const [cy, cx] = current;
+        const [y, x] = direction[d];
+        const move = [cy+y, cx+x];
+        
+        if(Math.abs(move[0]) > 5 || Math.abs(move[1]) > 5) return;    
+    
+        const [my, mx] = move;
+        
+        current[0] = my;
+        current[1] = mx;
+        
+        set.add(`${cy}${cx}${my}${mx}`);
+        set.add(`${my}${mx}${cy}${cx}`);
+    });
+    
+    return set.size/2
 }
-
