@@ -1,65 +1,30 @@
 function solution(str1, str2) {
-    const sliceStr = (str) => {
-        str = str.toLowerCase();
-        const arr = [];
-        
-        for(let i = 0; i < str.length; i++) {
-            const sliced = str.slice(i, i+2);
-            if(sliced.length!==2 || sliced.match(/[^a-z]/g)) continue;
-            arr.push(sliced);
-        };
-        
-        return arr;
-    };
+    let answer = 0;
+    const set1 = createSet(str1);
+    const set2 = createSet(str2);
+
+    const intersection = Object.keys(set1).reduce((acc,key) => {
+        if(!set2[key]) return acc;
+        acc += Math.min(set1[key], set2[key]);
+        return acc;
+    }, 0);
     
-    const arr1 = sliceStr(str1);
-    const arr2 = sliceStr(str2);
-    
-    const intersection = (() => {
-        let size = 0;
-        
-        const map1 = new Map();
-        const map2 = new Map();
-        
-        arr1.forEach((str) => {
-            map1.set(str, (map1.get(str)??0)+1);
-        });
-        arr2.forEach((str) => {
-            map2.set(str, (map2.get(str)??0)+1);
-        });
-        
-        map1.forEach((value, key) => {            
-            size += Math.min(value, map2.get(key) ?? 0);    
-        });
-        return size;
-    })();  
-    
-    const union = (() => {
-        let size = 0;
-        
-        const map1 = new Map();
-        const map2 = new Map();
-        
-        arr1.forEach((str) => {
-            map1.set(str, (map1.get(str)??0)+1);
-        });
-        arr2.forEach((str) => {
-            map2.set(str, (map2.get(str)??0)+1);
-        });
-        
-        map1.forEach((value, key) => {            
-            size += Math.max(value, map2.get(key) ?? 0);    
-            if(map2.has(key)) map2.delete(key);
-        });
-        
-        if(map2.size) {
-            size += [...map2.values()].reduce((a,b) => a+b,0)    
-        };
-        
-        return size;
-    })();  
+    const union = Object.keys({...set1,...set2}).reduce((acc,key) => {
+        acc += Math.max(set1[key]??0, set2[key]??0);
+        return acc;
+    }, 0);
     
     if(!intersection && !union) return 65536;
     
     return Math.floor((intersection/union)*65536);
 }
+
+const createSet = (str) => str.toLowerCase()
+                               .split('')
+                               .map((_, i, arr) => arr.slice(i,i+2))
+                               .map((str) => str.join(''))
+                               .filter((str) => (str.match(/[a-z]/g) ?? []).length === 2)
+                               .reduce((acc,cur) => {
+                                   acc[cur] = (acc[cur]??0)+1
+                                   return acc
+                               }, {})
