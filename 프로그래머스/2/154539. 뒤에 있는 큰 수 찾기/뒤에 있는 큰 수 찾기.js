@@ -1,16 +1,21 @@
 function solution(numbers) {
-    const n = numbers.length;
-    const result = new Array(n).fill(-1);
+    const answer = []; 
     const stack = [];
+    const n = numbers.length;
     
-    for (let i = 0; i < n; i++) {
-        const n = numbers[i];
-        
-        while (stack.length > 0 && numbers[stack[stack.length - 1]] < n) {
-            result[stack.pop()] = n;
+    for(let i = 0; i < n; i++) {
+        while(stack.length && numbers[stack[stack.length-1]] < numbers[i]) {
+            answer[stack[stack.length-1]] = numbers[i];
+            stack.pop();
         }
+        
         stack.push(i);
-    }
+    };
     
-    return result;
+    while(stack.length) {
+        const i = stack.pop();
+        answer[i] = -1;
+    };
+    
+    return answer;
 }
