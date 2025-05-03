@@ -1,35 +1,36 @@
 function solution(msg) {
     const answer = [];
-    const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    const dic = new Map();
+    let last = 26;
+    const hash = {}
     
-    str
-    .split('')
-    .forEach((c, i) => {
-        dic.set(c, i+1);
-    });
-    
-    let index = str.length+1;
-    let w = '';
-    
-    msg
-    .split('')
-    .forEach((c) => {
-        const wc = w + c;
+    msg.split('')
+       .forEach((s) => {
+            hash[s] = s.charCodeAt()-64;    
+        });
+
+    let tmp = '';
+    let i = 0;
+    while(i < msg.length) {
+        tmp += msg[i];
         
-        if(dic.has(wc)) {
-            w = wc;
-        } else {
-            answer.push(dic.get(w));
-            dic.set(wc, index++);
-            w = c;
-        };
-    });
- 
-    if (w) {
-        answer.push(dic.get(w));
-    }
+        for(let j = i+1; j < msg.length; j++) {
+            tmp += msg[j];
+            
+            if(!hash[tmp]) {
+                hash[tmp] = ++last;
+                const key = tmp.slice(0,tmp.length-1);
+                i += key.length;
+                answer.push(hash[key]);
+                tmp = ''
+                break;
+            }
+        }
+        
+        if(tmp) {
+            answer.push(hash[tmp]);
+            i += tmp.length;
+        }
+    };
     
     return answer;
 }
-
