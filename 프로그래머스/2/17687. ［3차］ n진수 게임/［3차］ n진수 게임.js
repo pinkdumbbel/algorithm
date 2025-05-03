@@ -3,16 +3,18 @@ function solution(n, t, m, p) {
     let cnt = 0;
     let turn = 0;
     
-    while(answer.length !== t) {
-        const c = (cnt++).toString(n).toUpperCase();
+    while(answer.length < t) {
+        const str = cnt.toString(n).toUpperCase();
         
-        for(const s of c) {
-            if((turn++%m) === p-1) {
-                answer+=s;
+        for(const s of str) {            
+            if(turn%m === p-1) {
+                answer += s;
+                if(answer.length === t) return answer;
             };
-            
-            if(answer.length === t) return answer;
-        };
+            turn++;
+        }
+        
+        cnt++;
     };
     
     return answer;
