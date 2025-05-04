@@ -1,17 +1,45 @@
 function solution(order) {
-    let stack = [];
-    let index = 0;
-    let count = 0;
+    let answer = 0;
     
-    for (let box = 1; box <= order.length; box++) {
-        stack.push(box);
+    const queue = Array(order.length).fill(0).map((_,i) => i+1);
+    const stack = [];
+    
+    let qi = 0;
+    let oi = 0;
+    
+    while(qi < order.length) {
+        const box = queue[qi++];
         
-        while (stack.length && stack[stack.length - 1] === order[index]) {
-            stack.pop();
-            index++;
-            count++;
-        }
+        if(box === order[oi]) {
+            answer++;
+            oi++;
+        } else {
+            while(stack.length && stack[stack.length-1] === order[oi]) {
+                answer++;
+                oi++;
+                stack.pop();
+            }
+            stack.push(box); 
+        };    
     }
     
-    return count;
+    while(stack.length) {
+        if(order[oi] !== stack.pop()) return answer;
+        
+        answer++;
+        oi++;
+    }
+    
+    return answer;
 }
+
+/*
+
+
+[4,3,2,1,5]
+[1,2,3,4,5]
+
+[4,5] [1,2,3];
+[5] [1,2,3];
+
+*/
