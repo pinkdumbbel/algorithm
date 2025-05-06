@@ -1,51 +1,46 @@
-
 function solution(fees, records) {
-    const answer = [];
+    let answer = [];
+    const last = getTime('23:59');
+    const map1 = new Map();
+    const map2 = new Map();
     
-    const timeMap = new Map();
-    const tmp = new Map();
-    const feeMap = new Map();
+    records.forEach((record) => {
+        map1.set(record.split(' ')[1], 0)
+        map2.set(record.split(' ')[1], 0)    
+    });
     
-    const sortedNumbers = new Set(records.map((r) => r.split(' ')[1]).sort((a,b) => Number(a)-Number(b)));
-    
-    const getTime = (t) => {
-        const [h, m] = t.split(':').map(Number);
-        return (h*60)+m;
-    };
-    
-    const [bt, bf, ut,uf] = fees;
-    
-    records.forEach((r) => {
-        const [time, number, type] = r.split(' ');
-        const nt = getTime(time);
+
+    records.forEach((record) => {
+        const [time, carNumber, type] = record.split(' ');
+        const timeToMinute = getTime(time);
         
         if(type === 'IN') {
-            tmp.set(number, nt);
-            return;
-        } 
-        const pt = nt - tmp.get(number);
-        timeMap.set(number, (timeMap.get(number) || 0)+pt);
-        tmp.delete(number);
+            map1.set(carNumber, timeToMinute);
+        }
+        else {
+            map2.set(carNumber, map2.get(carNumber)+timeToMinute-map1.get(carNumber))
+            map1.delete(carNumber);
+        }
     });
     
-    tmp.forEach((time, number) => {
-       const t = timeMap.get(number) || 0;
-       const pt = getTime('23:59')-time;
-
-       timeMap.set(number, t+pt);
-    });
+    for(const [carNumber, time] of map1.entries()) {
+        map2.set(carNumber, map2.get(carNumber)+(last-time));
+        map1.delete(carNumber);
+    }
     
-    timeMap.forEach((pt, number) => {
-        if(pt <= bt) {
-            feeMap.set(number, bf);
-        } else {
-            feeMap.set(number, bf+(Math.ceil((pt-bt)/ut))*uf);
-        };
-    });
-    
-    sortedNumbers.forEach((n) => {
-        answer.push(feeMap.get(n));    
-    });
+    [...map2.entries()].sort((a,b) => Number(a[0])-Number(b[0]))
+                       .forEach(([carNumber, time], i) => {
+                            if(time <= fees[0]) {
+                                answer[i] = fees[1];
+                                return;
+                            }
+                            answer[i] = fees[1]+Math.ceil(((time-fees[0])/fees[2]))*fees[3];
+                        });
     
     return answer;
 }
+
+const getTime = (time) => {
+    const [hour, minute] = time.split(':');
+    return (Number(hour)*60)+Number(minute);
+};
