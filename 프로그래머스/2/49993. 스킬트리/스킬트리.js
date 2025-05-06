@@ -1,27 +1,7 @@
 function solution(skill, skill_trees) {
-    let answer = 0;
+    const regex = new RegExp(`[^${skill}]`, 'g');
     
-    const skills = skill.split('');
-    const skillTrees = skill_trees.map((skillTree) => skillTree.split('').filter((skill) => skills.includes(skill)).join(''));
-    
-    skillTrees.forEach((st) => {
-        const tmp = [];
-        let flag = true;
-        
-        st.split('').forEach((s) => {
-            tmp.push(s);
-        });
-        
-        tmp.forEach((t, i) => {
-            if(!flag) return;
-            if(t !== skills[i]) {
-                flag = false
-            }
-        });
-        
-        if(flag) answer++
-    });
-    
-    return answer;
-};
-
+    return skill_trees.map((tree) => tree.replace(regex,''))
+                      .filter((tree) => skill.startsWith(tree))
+                      .length;
+}
