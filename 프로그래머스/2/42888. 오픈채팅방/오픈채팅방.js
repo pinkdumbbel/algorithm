@@ -1,28 +1,23 @@
 function solution(record) {
     const answer = [];
-    const hash = {};
-    const kor = {
-        'Enter': '들어왔습니다.',
-        'Leave': '나갔습니다.'
-    }
+    const map = new Map();
     
-    record.forEach((user) => {
-        const [, id, nickName] = user.split(' ');
+    record.forEach((r) => {
+        const [type, uid, nickName] = r.split(' ');
         
-        if(!nickName) return;
-        
-        hash[id] = nickName;
-    })
+        if(type !== 'Leave') {
+          map.set(uid, nickName);    
+        }
+    });
     
-    record.forEach((user) => {
-       const [type, id] = user.split(' ');
-       
-       if(!kor[type]) return;
+    record.forEach((r) => {
+        const [type, uid, nickName] = r.split(' ');
+        const currentNickName = map.get(uid);
         
-       const nickName = hash[id];
-        
-       const str = `${nickName}님이 ${kor[type]}`
-       answer.push(str);
+        if(type !== 'Change') {
+          const message = `${currentNickName}님이 ${type === 'Enter' ? '들어왔습니다.' : '나갔습니다.'}`
+          answer.push(message)  
+        }
     });
     
     return answer;
