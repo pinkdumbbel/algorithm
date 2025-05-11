@@ -1,33 +1,31 @@
 function solution(numbers) {
     const n = numbers.length;
-    const set = new Set();
     const chk = Array(n).fill(false);
     
+    const set = new Set();
+    
     const isPrime = (n) => {
-        if(n < 2) return false;
-        
-        for(let i = 2; i <= Math.sqrt(n); i++){
-            if(n%i === 0) return false;
-        };        
-        
+        n = Number(n);
+        if(n < 2) return false;    
+        for(let i = 2; i <= Math.sqrt(n); i++) {
+            if(n%i===0) return false;
+        }
         return true;
     };
-
-    function dfs(permutations){
-        if(permutations.length) {
-            set.add(Number(permutations.join('')));    
-        };
+    
+    const dfs = (s = '') => {
+        if(isPrime(s)) set.add(Number(s))
         
         for(let i = 0; i < n; i++) {
-           if(!chk[i]) {
-               chk[i] = true;
-               dfs([...permutations, numbers[i]])
-               chk[i] = false;
-           }
-        }  
+            if(!chk[i]) {
+                chk[i] = true;
+                dfs(s+numbers[i]);
+                chk[i] = false;
+            }
+        }; 
     };
     
-    dfs([]);
+    dfs();
     
-    return [...set].filter(isPrime).length;
+    return set.size;
 }
