@@ -1,12 +1,11 @@
 function solution(orders, course) {
-    // 각 주문을 알파벳 순으로 정렬
-    const sortedOrders = orders.map(order => 
-        order.split('').sort().join('')
-    );
+    const answer = [];
     
-    // 조합 생성 함수
-    const generateCombinations = (arr, k) => {
+    orders = orders.map((order) => order.split('').sort().join(''));
+    
+    const getCombi = (arr, k) => {
         const result = [];
+        
         const dfs = (start, path) => {
             if (path.length === k) {
                 result.push(path.join(''));
@@ -18,36 +17,34 @@ function solution(orders, course) {
                 path.pop();
             }
         };
+        
         dfs(0, []);
         return result;
     };
     
-    // 조합 빈도수 카운팅
-    const frequency = {};
-    for (const order of sortedOrders) {
-        const chars = order.split('');
-        for (const len of course) {
-            if (chars.length < len) continue;
-            const combinations = generateCombinations(chars, len);
-            for (const combo of combinations) {
-                frequency[combo] = (frequency[combo] || 0) + 1;
-            }
-        }
-    }
-
-    // 코스 길이별 최다 주문 조합 추출
-    const result = [];
-    for (const len of course) {
-        const candidates = Object.keys(frequency).filter(combo => 
-            combo.length === len && frequency[combo] >= 2
-        );
-        if (candidates.length === 0) continue;
+    
+    
+    for(const len of course) {
+        const map = new Map();
         
-        const maxCount = Math.max(...candidates.map(c => frequency[c]));
-        const maxCombos = candidates.filter(c => frequency[c] === maxCount);
-        result.push(...maxCombos);
-    }
-
-    // 최종 정렬 후 반환
-    return result.sort();
+        for(const order of orders) {
+            const results = getCombi(order, len);
+            
+            results.forEach((str) => {
+                map.set(str, (map.get(str)??0)+1)
+            })
+        };
+        
+        const max = Math.max(...[...map.values()]);
+        
+        if(max < 2) continue;
+        
+        for(const [key, value] of map.entries()){
+            if(max === value) {
+                answer.push(key);
+            }
+        };
+    };
+    
+    return answer.sort();
 }
