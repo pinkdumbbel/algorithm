@@ -39,24 +39,17 @@ function solution(places) {
 
         if (dist < 3) {
           if (dist < 3) {
-            // 같은 열 (세로로 2칸 떨어짐)
             if (kx === jx) {
               if (places[i][(ky + jy) / 2][kx] !== "X") {
                 flag = 0;
                 break;
               }
-            }
-
-            // 같은 행 (가로로 2칸 떨어짐)
-            else if (ky === jy) {
+            } else if (ky === jy) {
               if (places[i][ky][(kx + jx) / 2] !== "X") {
                 flag = 0;
                 break;
               }
-            }
-
-            // 대각선 (L자 형태)
-            else {
+            } else {
               if (places[i][jy][kx] !== "X" || places[i][ky][jx] !== "X") {
                 flag = 0;
                 break;
