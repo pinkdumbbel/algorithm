@@ -1,71 +1,62 @@
 function solution(expression) {
-    const numbers = [];
-    const operators = [];
-    let currentNumber = '';
+    let answer = 0;
+    const priorities = [
+        ['+', '-', '*'],
+        ['+', '*', '-'],
+        ['*', '+', '-'],
+        ['*', '-', '+'],
+        ['-', '+', '*'],
+        ['-', '*', '+'],        
+    ]
     
-    for (let i = 0; i < expression.length; i++) {
-        const char = expression[i];
-        if (char === '+' || char === '-' || char === '*') {
-            numbers.push(parseInt(currentNumber));
-            operators.push(char);
-            currentNumber = '';
+    const nums = [];
+    const opers = [];
+    let str = '';
+    
+    for(const char of expression) {
+        if(priorities[0].includes(char)) {
+            opers.push(char);
+            nums.push(Number(str));
+            str = '';
         } else {
-            currentNumber += char;
-        }
-    }
-    numbers.push(parseInt(currentNumber));
+            str += char;
+        }; 
+    };
+    nums.push(Number(str));
     
-    const uniqueOperators = [...new Set(operators)];
-    
-    function getPermutations(arr) {
-        if (arr.length <= 1) return [arr];
-        const result = [];
-        for (let i = 0; i < arr.length; i++) {
-            const current = arr[i];
-            const remaining = arr.slice(0, i).concat(arr.slice(i + 1));
-            const perms = getPermutations(remaining);
-            for (const perm of perms) {
-                result.push([current, ...perm]);
-            }
-        }
-        return result;
-    }
-    
-    function calculate(nums, ops, priority) {
-        let tempNums = [...nums];
-        let tempOps = [...ops];
+    const calculate = (nums, ops, priority) => {
+        const tmpNums = [...nums];
+        const tmpOps = [...ops];
         
-        for (const op of priority) {
+        for(const op of priority) {
+            let result;
             let i = 0;
-            while (i < tempOps.length) {
-                if (tempOps[i] === op) {
-                    let result;
-                    if (op === '+') {
-                        result = tempNums[i] + tempNums[i + 1];
-                    } else if (op === '-') {
-                        result = tempNums[i] - tempNums[i + 1];
-                    } else if (op === '*') {
-                        result = tempNums[i] * tempNums[i + 1];
-                    }
+                
+            while(i < tmpOps.length) {
+                if(tmpOps[i] === op) {
+                    if(op === '+') {
+                       result = tmpNums[i] + tmpNums[i+1];                             
+                    } else if(op === '-'){
+                        result = tmpNums[i] - tmpNums[i+1];                             
+                    } else {
+                        result = tmpNums[i] * tmpNums[i+1];                             
+                    };
                     
-                    tempNums.splice(i, 2, result);
-                    tempOps.splice(i, 1);
+                    tmpNums.splice(i, 2, result);
+                    tmpOps.splice(i, 1);
                 } else {
                     i++;
                 }
-            }
-        }
+            };
+        };
         
-        return tempNums[0];
-    }
+        return tmpNums[0];
+    };
     
-    const permutations = getPermutations(uniqueOperators);
-    let maxResult = 0;
+    for(const priority of priorities) {
+        const result = calculate(nums, opers, priority);
+        answer = Math.max(answer, Math.abs(result));
+    };
     
-    for (const priority of permutations) {
-        const result = calculate(numbers, operators, priority);
-        maxResult = Math.max(maxResult, Math.abs(result));
-    }
-    
-    return maxResult;
+    return answer;
 }
