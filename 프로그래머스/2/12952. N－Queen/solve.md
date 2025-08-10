@@ -69,11 +69,15 @@ function solution(n) {
   const queens = new Array(n).fill(-1); // queens[i] = j는 i행 j열에 퀸이 있다는 의미
 
   function isValid(row, col) {
+    //i는 이미 배치되어 있는 열에 해당함
     for (let i = 0; i < row; i++) {
       // 같은 열에 퀸이 있는지 확인
       if (queens[i] === col) return false;
 
       // 대각선에 퀸이 있는지 확인
+      // 이미 배치되어 있는 열 - 현재 열 = 열 이동 거리
+      // 이미 배치 되어 있는 행 - 현재 행 = 행 이동거리
+      // 열 이동거리 === 행 이동거리 이면 대각 선이라 불가
       if (Math.abs(queens[i] - col) === Math.abs(i - row)) return false;
     }
     return true;
