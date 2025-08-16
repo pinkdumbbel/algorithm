@@ -1,7 +1,6 @@
 function solution(n, q, ans) {
     let answer = 0;
     const len = 5;
-    const checked = Array.from({length: len}, () => false);
     
     const getCombis = () => {
         const combis = [];
@@ -13,11 +12,7 @@ function solution(n, q, ans) {
             }
 
             for(let i = L; i < n; i++) {
-                if(!checked[i]) {
-                    checked[i] = true;
-                    dfs(i+1, [...arr, i+1]);
-                    checked[i] = false;
-                };
+                dfs(i+1, [...arr, i+1]);
             };      
         }
         
