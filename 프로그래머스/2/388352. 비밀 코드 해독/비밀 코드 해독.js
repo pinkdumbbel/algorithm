@@ -2,26 +2,31 @@ function solution(n, q, ans) {
     let answer = 0;
     const len = 5;
     const checked = Array.from({length: len}, () => false);
-    const combis = [];
     
-    const getCombis = (L = 0, arr = []) => {
-        if(L === len) {
-            if(isSorted(arr)) combis.push(arr);
-            return;
+    const getCombis = () => {
+        const combis = [];
+        
+        const dfs = (L = 0, arr = []) => {
+            if(arr.length === len) {
+                combis.push(arr);
+                return;
+            }
+
+            for(let i = L; i < n; i++) {
+                if(!checked[i]) {
+                    checked[i] = true;
+                    dfs(i+1, [...arr, i+1]);
+                    checked[i] = false;
+                };
+            };      
         }
         
-        for(let i = 0; i < n; i++) {
-            if(!checked[i]) {
-                checked[i] = true;
-                getCombis(L+1, [...arr, i+1]);
-                checked[i] = false;
-            };
-        };  
+        dfs();
+        
+        return combis;
     };
-
-    getCombis();
     
-    for(const combi of combis) {
+    for(const combi of getCombis()) {
         let flag = true;
         
         for(let i = 0; i < q.length; i++) {
@@ -40,13 +45,3 @@ function solution(n, q, ans) {
     return answer;
 }
 
-const isSorted = (arr) => {    
-    let prev = arr[0];
-    
-    for(let i = 1; i < arr.length; i++) {
-        if(prev > arr[i]) return false;
-        prev = arr[i];
-    };
-    
-    return true;    
-};
