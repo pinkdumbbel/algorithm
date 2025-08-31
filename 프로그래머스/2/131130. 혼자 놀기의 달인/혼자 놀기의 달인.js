@@ -1,35 +1,28 @@
 function solution(cards) {
     const n = cards.length;
-    const check = Array(n).fill(false);
+    const visited = Array(n).fill(false);
+    const groups = [];
+    
     cards = cards.map((n) => n-1);
     
-    const bfs = (n) => {
-        let cnt = 1;    
-        const queue = [n];
+    for(let i = 0; i < n; i++) {
+        if(visited[i]) continue;
         
-        while(queue.length) {
-            const card = queue.shift();
-            
-            if(check[card]) return cnt;
-            
-            check[card] = true;
-            queue.push(cards[card]);
-            cnt++;
+        let current = i;
+        let group = 0;
+        
+        while(!visited[current]) {
+            visited[current] = true;
+            current = cards[current];
+            group++;
         };
         
-        return cnt;
+        groups.push(group);
     };
     
-    const result = [];
+    groups.sort((a,b) => b-a);
     
-    cards.forEach((n,i) => {
-        check[i] = true;
-        result.push(bfs(n));
-    });
+    if(groups.length < 2) return 0;
     
-    result.sort((a,b) => b-a);
-    
-    if(result[0] === n) return 0;
-    
-    return result[0] * result[1];
+    return groups[0] * groups[1]
 }
