@@ -1,15 +1,14 @@
 function solution(begin, end) {
-    const result = new Array(end - begin + 1).fill(0);
+    const answer = Array(end-begin+1).fill(0);
+    const maxBlock = Math.min(10_000_000, Math.floor(end/2));
     
-    const maxBlock = Math.min(Math.floor(end / 2), 10000000);
-    
-    for (let n = 1; n <= maxBlock; n++) {
-        let start = Math.max(n * 2, Math.ceil(begin / n) * n);
+    for(let block = 1; block <= maxBlock; block++) {
+        let start = Math.max(block*2, Math.ceil(begin/block)*block);
         
-        for (let pos = start; pos <= end; pos += n) {
-            if (pos >= begin) result[pos - begin] = n;
-        }
-    }
+        for(start; start <= end; start+=block) {
+            if(start >= begin) answer[start-begin] = block;
+        };
+    };
     
-    return result;
+    return answer;
 }
